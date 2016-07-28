@@ -34,7 +34,6 @@ import java.util.Properties;
 public class KafkaConsumer {
 
     private final static Integer AMOUNT_OF_THREADS_PER_CONSUMER = 1;
-    private final static String GROUP_ID = "elasticsearch-kafka-river";
     private final static Integer CONSUMER_TIMEOUT = 15000;
 
     private List<KafkaStream<byte[], byte[]>> streams;
@@ -62,7 +61,7 @@ public class KafkaConsumer {
         final Properties props = new Properties();
         props.put("zookeeper.connect", riverConfig.getZookeeperConnect());
         props.put("zookeeper.connection.timeout.ms", String.valueOf(riverConfig.getZookeeperConnectionTimeout()));
-        props.put("group.id", GROUP_ID);
+        props.put("group.id", riverConfig.getGroupId());
         props.put("auto.commit.enable", String.valueOf(false));
         props.put("consumer.timeout.ms", String.valueOf(CONSUMER_TIMEOUT));
 

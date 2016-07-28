@@ -34,6 +34,7 @@ public class RiverConfig {
     private static final String ZOOKEEPER_CONNECTION_TIMEOUT = "zookeeper.connection.timeout.ms";
     private static final String TOPIC = "topic";
     private static final String MESSAGE_TYPE = "message.type";
+    private static final String GROUP_ID = "group.id";
 
     /* Elasticsearch config */
     private static final String INDEX_NAME = "index";
@@ -54,6 +55,8 @@ public class RiverConfig {
     private int zookeeperConnectionTimeout;
     private String topic;
     private MessageType messageType;
+    private String groupId;
+
     private String indexName;
     private String typeName;
     private int bulkSize;
@@ -80,6 +83,8 @@ public class RiverConfig {
             zookeeperConnectionTimeout = XContentMapValues.nodeIntegerValue(kafkaSettings.get(ZOOKEEPER_CONNECTION_TIMEOUT), 10000);
             messageType = MessageType.fromValue(XContentMapValues.nodeStringValue(kafkaSettings.get(MESSAGE_TYPE),
                     MessageType.JSON.toValue()));
+            groupId = XContentMapValues.nodeStringValue(kafkaSettings.get(GROUP_ID), "elasticsearch-kafka-river");
+
         } else {
             zookeeperConnect = "localhost";
             zookeeperConnectionTimeout = 10000;
@@ -184,6 +189,10 @@ public class RiverConfig {
 
     MessageType getMessageType() {
         return messageType;
+    }
+
+    String getGroupId() {
+        return groupId;
     }
 
     String getIndexName() {
